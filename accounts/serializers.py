@@ -1,11 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from courses.serializers import CourseSerializer
-
 
 class UserSerializer(serializers.ModelSerializer):
-    course_list = CourseSerializer(many=True)
 
     class Meta:
         model = User
