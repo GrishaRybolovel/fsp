@@ -3,3 +3,4 @@ gunicorn
 djangorestframework
 markdown
 django-filter
+djangorestframework-simplejwt

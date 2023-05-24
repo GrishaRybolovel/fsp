@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'search',
     'rest_framework',
     'accounts',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
