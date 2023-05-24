@@ -10,6 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class RegisterSerializer(serializers.HyperlinkedModelSerializer):
+    username = serializers.TextField()
+    password = serializers.TextField()
     class Meta:
         model = User
         fields = ['username', 'password', 'email']
