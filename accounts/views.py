@@ -23,6 +23,7 @@ class UserViewSet(ModelViewSet):
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
+    serializer_class = RegisterSerializer
 
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
