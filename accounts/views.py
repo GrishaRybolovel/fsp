@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from accounts.serializers import UserSerializer, RegisterSerializer
-from points.models import UserScore
 
 
 class UserViewSet(ModelViewSet):
@@ -31,7 +30,6 @@ class RegisterView(APIView):
         user = serializer.save()
 
         refresh = RefreshToken.for_user(user)
-        UserScore.get_score(user)  # create user score
 
         return Response(
             data={
