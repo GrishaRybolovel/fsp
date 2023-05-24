@@ -16,9 +16,8 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
         write_only_fields = ['password']
 
     def create(self, validated_data):
-        user = User.objects.create(
-            username=validated_data['username'],
-            email=validated_data['email']
+        user = User.objects.create_user(
+            **validated_data
         )
 
         user.set_password(validated_data['password'])
