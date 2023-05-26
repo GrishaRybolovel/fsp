@@ -39,3 +39,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
+class Item(models.Model):
+    name = models.CharField(max_length=63, blank=True, verbose_name='Название')
+    cost_retail = models.IntegerField(blank=True, null=True, verbose_name='Розничная цена')
+    cost_wholesale = models.IntegerField(blank=True, null=True, verbose_name='Оптовая цена')
+    doc = models.FileField(upload_to='uploads/', verbose_name='Фото')
+    date = models.DateField(verbose_name='Дата готовности', blank=True, null=True)
+    farmer = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.deletion.CASCADE, null=True)
+
+    class Meta:
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
