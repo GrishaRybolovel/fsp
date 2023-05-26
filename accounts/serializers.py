@@ -38,7 +38,9 @@ class ItemSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Item
         fields = ['id', 'name', 'cost_retail', 'cost_wholesale',
-                  'date', 'farmer', 'number', 'number_wholesale']
+                  'date', 'farmer', 'number', 'number_wholesale',
+                  'description', 'expire_date', 'number_for_month',
+                  'subscriptable', 'category']
 
     def create(self, validated_data):
         item = Item.objects.create(
