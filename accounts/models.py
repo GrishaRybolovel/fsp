@@ -31,6 +31,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=20, null = True, blank=True)
     card = models.CharField(max_length=20, null=True, blank=True)
     email = models.CharField(max_length=20, null=True, blank=True)
+    chats = models.ManyToManyField(
+        "Chat",
+        related_name='chats',
+        blank=True,
+        verbose_name='Чаты'
+    )
 
 
     objects = UserManager()
@@ -38,6 +44,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['full_name', 'role']
+
+    def get_full_name(self):
+        return '{} {}'.format(self.first_name, self.last_name).strip()
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
@@ -61,3 +70,23 @@ class Item(models.Model):
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+
+class Message(models.Model):
+    sender = models.ForeignKey("User", on_delete=models.deletion.CASCADE, verbose_name='Отправитель', null=True)
+    text = models.CharField(max_length=2048, blank=False, null=True)
+
+    class Meta:
+        verbose_name = 'Сообщения'
+        verbose_name_plural = 'Сообщения'
+
+class Chat(models.Model):
+    messages = models.ManyToManyField(
+        "Message",
+        related_name="messages",
+        blank=True,
+        verbose_name='Сообщения'
+    )
+
+    class Meta:
+        verbose_name = 'Чат'
+        verbose_name_plural = 'Чаты'
