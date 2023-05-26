@@ -22,5 +22,6 @@ Django REST framework - это мощный и гибкий набор инст�
 * 4.`pip install -r requirements.txt`
 * 5.`python3 manage.py makemigrations`
 * 6.`python3 manage.py migrate`
+* 7. Перейти в браузер по адресу `http://127.0.0.1:8000/`
 # Также наш проект уже поставлен на хостинг и доступен по адресу:
 * `https://fspmainservice.onrender.com/`
