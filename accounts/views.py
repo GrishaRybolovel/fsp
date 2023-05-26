@@ -3,7 +3,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import action
 
-from django.contrib.auth.models import User
+from .models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from accounts.serializers import UserSerializer, RegisterSerializer
