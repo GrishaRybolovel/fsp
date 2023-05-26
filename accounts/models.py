@@ -33,6 +33,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
         verbose_name='Чаты'
     )
+    # items =
 
 
     objects = UserManager()
