@@ -16,7 +16,7 @@ Django REST framework - это мощный и гибкий набор инст�
 ## [Требования](https://github.com/GrishaRybolovel/fsp/blob/master/requirements.txt)
 
 Для запуска проекта нужно:
-* Склонировать проект в локальную папку
-`pip install -r requirements.txt`
-`python3 manage.py makemigrations`
-`python3 manage.py migrate`
+* 1.Склонировать проект в локальную папку
+* 2.`pip install -r requirements.txt`
+* 3.`python3 manage.py makemigrations`
+* 4.`python3 manage.py migrate`
