@@ -11,6 +11,7 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', TokenObtainPairView.as_view(), name='login'),
     path('refresh/', TokenRefreshView.as_view(), name='refresh'),
-    # path('get_messages/<int:id>', )
+    path('get_messages/<int:id>', MessagesView.as_view(), name='get_messages'),
+    path('chats/', ChatsView.as_view(), name='get_chats'),
     path("", include(router.urls))
 ]

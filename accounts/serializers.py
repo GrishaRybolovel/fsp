@@ -1,4 +1,4 @@
-from .models import User
+from .models import *
 from rest_framework import serializers
 
 
@@ -7,6 +7,16 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username']
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = ['text', 'created_at', 'sender', 'id']
+
+class ChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        fields = ['name', 'id']
 
 
 class RegisterSerializer(serializers.HyperlinkedModelSerializer):

@@ -1,12 +1,13 @@
 from rest_framework.views import APIView, Response
 from rest_framework.viewsets import ModelViewSet
+from django.core import serializers
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import action
 
-from .models import User
+from .models import *
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from accounts.serializers import UserSerializer, RegisterSerializer
+from accounts.serializers import *
 
 
 class UserViewSet(ModelViewSet):
@@ -40,21 +41,27 @@ class RegisterView(APIView):
             status=201
         )
 
-class MessagesView(APIView):
+
+class ChatsView(APIView):
     permission_classes = [AllowAny]
-    serializer_class = RegisterSerializer
-
-    def post(self, request):
-        serializer = RegisterSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-
-        refresh = RefreshToken.for_user(user)
-
+    def get(self, request):
+        chats = []
+        for c in request.user.chats.all():
+            chats.append(Chat.objects.get(id=c.id))
+        res = ChatSerializer(chats, many=True)
         return Response(
             data={
-                'access': str(refresh.access_token),
-                'refresh': str(refresh)
-            },
-            status=201
-        )
+                'chats': res.data,
+            }, status=201)
+
+class MessagesView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, id):
+        chat = Chat.objects.get(id=id)
+        messages = chat.messages.all()
+        res = MessageSerializer(messages, many=True)
+        return Response(
+            data={
+                'messages': res.data,
+            }, status=201)
