@@ -24,7 +24,7 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
     # password = serializers.CharField()
     class Meta:
         model = User
-        fields = ['username', 'full_name', 'password', 'email', 'role']
+        fields = ['name', 'password', 'email', 'role']
         write_only_fields = ['password', 'role']
 
     def create(self, validated_data):
