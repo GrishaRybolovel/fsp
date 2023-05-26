@@ -25,3 +25,12 @@ Django REST framework - это мощный и гибкий набор инст�
 * 7. Перейти в браузер по адресу `http://127.0.0.1:8000/`
 # Также наш проект уже поставлен на хостинг и доступен по адресу:
 * `https://fspmainservice.onrender.com/`
+
+# Как использовать API:
+* 1. https://fspmainservice.onrender.com/users/login/ (post)
+* 2. https://fspmainservice.onrender.com/users/register/ (post)
+* 3. https://fspmainservice.onrender.com/users/chat/3 (get)
+* 4. https://fspmainservice.onrender.com/users/chats/ (get)
+* 5. https://fspmainservice.onrender.com/users/items (get/post)
+* 6. https://fspmainservice.onrender.com/users/chat/3/post_message (post)
+* 7. https://fspmainservice.onrender.com/users/get_chat/3 (get)
