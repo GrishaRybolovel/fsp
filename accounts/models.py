@@ -30,6 +30,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     address = models.CharField(max_length=300, null=True, blank=True)
     phone_number = models.CharField(max_length=20, null = True, blank=True)
     card = models.CharField(max_length=20, null=True, blank=True)
+    chats = models.ManyToManyField(
+        "Chat",
+        related_name='chats',
+        blank=True,
+        verbose_name='Чаты'
+    )
 
 
     objects = UserManager()
@@ -63,4 +69,21 @@ class Item(models.Model):
         verbose_name_plural = 'Товары'
 
 class Message(models.Model):
-    sender = models.ForeignKey
+    sender = models.ForeignKey("User", on_delete=models.deletion.CASCADE, verbose_name='Отправитель', null=True)
+    text = models.CharField(max_length=2048, blank=False, null=True)
+
+    class Meta:
+        verbose_name = 'Сообщения'
+        verbose_name_plural = 'Сообщения'
+
+class Chat(models.Model):
+    messages = models.ManyToManyField(
+        "Message",
+        related_name="messages",
+        blank=True,
+        verbose_name='Сообщения'
+    )
+
+    class Meta:
+        verbose_name = 'Чат'
+        verbose_name_plural = 'Чаты'
