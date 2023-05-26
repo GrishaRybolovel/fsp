@@ -1,10 +1,9 @@
-# flutter-ui-django-rest-api-backend
-This is a simple Flutter Application which use Django Rest Framework as a backend. 
+# Django RESTFull API for Flutter Backend
+Это простое Django приложение для обработки данных в нашем Flutter приложении
 
-## What's Here?
-We created a simple mobile application using Flutter and Python Django Framework.
-1. Create a Django Project
-2. Create Some Models
-3. Create a REST API
-4. Make UI in flutter
-5. Use the API to load data in Flutter
+## Что здесь есть?
+Мы создали несколько сущностей для нашего приложения:
+1. User(might be Farmer, Customer of Admin)
+2. Item
+3. Наш собственный Chat с Messages
+4. Order
