@@ -13,6 +13,16 @@ class User(AbstractBaseUser, PermissionsMixin):
                                 validators=[ASCIIUsernameValidator],
                                 error_messages={'unique': "Пользователь с таким именем уже существует"})
     full_name = models.CharField(max_length=150)
+    ROLE_CHOICES = [
+        ('FM', 'Фермер'),
+        ('SL', 'Покупатель'),
+        ('AD', 'Админ')
+    ]
+    role = models.CharField(max_length=3,
+                               choices=ROLE_CHOICES,
+                               default='SL',
+                               verbose_name='Роль',
+                               blank=False)
     is_staff = models.BooleanField('staff status', default=False)
     is_active = models.BooleanField('active', default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -26,7 +36,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['full_name']
+    REQUIRED_FIELDS = ['full_name', 'role']
 
     def get_full_name(self):
         return '{} {}'.format(self.first_name, self.last_name).strip()
@@ -46,8 +56,11 @@ class Item(models.Model):
     cost_wholesale = models.IntegerField(blank=True, null=True, verbose_name='Оптовая цена')
     doc = models.FileField(upload_to='uploads/', verbose_name='Фото')
     date = models.DateField(verbose_name='Дата готовности', blank=True, null=True)
-    farmer = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.deletion.CASCADE, null=True)
+    farmer = models.OneToOneField(User, on_delete=models.deletion.CASCADE, null=True)
 
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+
+class Message(models.Model):
+    sender = models.ForeignKey
