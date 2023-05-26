@@ -23,3 +23,5 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
         )
 
         return user
+
+

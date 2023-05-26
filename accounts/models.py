@@ -15,7 +15,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     full_name = models.CharField(max_length=150)
     ROLE_CHOICES = [
         ('FM', 'Фермер'),
-        ('SL', 'Покупатель'),
+        ('BY', 'Покупатель'),
         ('AD', 'Админ')
     ]
     role = models.CharField(max_length=3,
@@ -45,9 +45,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['full_name', 'role']
 
-    def get_full_name(self):
-        return '{} {}'.format(self.first_name, self.last_name).strip()
-
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
@@ -74,12 +71,14 @@ class Item(models.Model):
 class Message(models.Model):
     sender = models.ForeignKey("User", on_delete=models.deletion.CASCADE, verbose_name='Отправитель', null=True)
     text = models.CharField(max_length=2048, blank=False, null=True)
+    created_at = models.DateTimeField(auto_now=True, null=True, verbose_name='Дата отправки')
 
     class Meta:
         verbose_name = 'Сообщения'
         verbose_name_plural = 'Сообщения'
 
 class Chat(models.Model):
+    name = models.CharField(max_length=255, null=True, verbose_name='Название чата')
     messages = models.ManyToManyField(
         "Message",
         related_name="messages",
