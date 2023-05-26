@@ -96,10 +96,10 @@ WSGI_APPLICATION = 'DjangoAPIFlutter.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fspfarm_ptww',
-        'USER': 'fspfarm_ptww_user',
-        'PASSWORD': 'YUFsaIn44hDDhTH9Tfk4g2OcCJA5Vw4E',
-        'HOST': 'dpg-cho9grndvk4rn2v54ndg-a',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': 'localhost',
         'PORT': '5432'
     }
 }
