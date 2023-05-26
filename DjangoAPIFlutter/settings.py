@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'search',
     'rest_framework',
     'accounts',
     'rest_framework_simplejwt',
@@ -96,10 +95,10 @@ WSGI_APPLICATION = 'DjangoAPIFlutter.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'NAME': 'fsp_qk25',
+        'USER': 'fsp_qk25_user',
+        'PASSWORD': 'TaFvMfFBDDuUK1AFczCbZ7rJLrZiyUlF',
+        'HOST': 'dpg-chokcgik728ivvtkvfu0-a',
         'PORT': '5432'
     }
 }
