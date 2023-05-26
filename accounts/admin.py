@@ -18,7 +18,7 @@ admin.site.register(User, UserAdmin)
 
 
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'sender', 'text')
+    list_display = ('id', 'sender', 'text', 'created_at')
     list_display_links = ('id',)
     search_fields = ('id',)
 
