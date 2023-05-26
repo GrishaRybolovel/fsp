@@ -10,9 +10,9 @@ class ItemAdmin(admin.ModelAdmin):
 admin.site.register(Item, ItemAdmin)
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'username', 'password', 'full_name', 'address', 'phone_number', 'card')
+    list_display = ('id', 'name', 'password', 'address', 'phone_number', 'card')
     list_display_links = ('id',)
-    search_fields = ('id', 'username', 'full_name')
+    search_fields = ('id', 'name')
 
 admin.site.register(User, UserAdmin)
 

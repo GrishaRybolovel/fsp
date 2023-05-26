@@ -24,7 +24,7 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
     # password = serializers.CharField()
     class Meta:
         model = User
-        fields = ['username', 'full_name', 'password', 'email', 'role']
+        fields = ['name', 'password', 'email', 'role']
         write_only_fields = ['password', 'role']
 
     def create(self, validated_data):
@@ -33,5 +33,20 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
         )
 
         return user
+
+class ItemSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Item
+        fields = ['id', 'name', 'cost_retail', 'cost_wholesale',
+                  'date', 'farmer', 'number', 'number_wholesale',
+                  'description', 'expire_date', 'number_for_month',
+                  'subscriptable', 'category']
+
+    def create(self, validated_data):
+        item = Item.objects.create(
+            **validated_data
+        )
+
+        return item
 
 

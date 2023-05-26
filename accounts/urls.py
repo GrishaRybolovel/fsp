@@ -15,5 +15,6 @@ urlpatterns = [
     path('chat/<int:chat_id>', MessagesView.as_view(), name='chat'),
     path('chat/<int:chat_id>/push_message', PostMessageView.as_view(), name='post_message'),
     path('chats/', ChatsView.as_view(), name='get_chats'),
+    path('items/', ItemsView.as_view(), name='get_items'),
     path("", include(router.urls))
 ]
