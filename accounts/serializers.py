@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from .models import User
 from rest_framework import serializers
 
 
@@ -14,8 +14,8 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
     # password = serializers.CharField()
     class Meta:
         model = User
-        fields = ['username', 'password', 'email']
-        write_only_fields = ['password']
+        fields = ['username', 'fullname', 'password', 'email', 'role']
+        write_only_fields = ['password', 'role']
 
     def create(self, validated_data):
         user = User.objects.create_user(

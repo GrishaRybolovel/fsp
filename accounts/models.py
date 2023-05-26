@@ -30,6 +30,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     address = models.CharField(max_length=300, null=True, blank=True)
     phone_number = models.CharField(max_length=20, null = True, blank=True)
     card = models.CharField(max_length=20, null=True, blank=True)
+    email = models.CharField(max_length=20, null=True, blank=True)
     chats = models.ManyToManyField(
         "Chat",
         related_name='chats',
@@ -63,6 +64,8 @@ class Item(models.Model):
     doc = models.FileField(upload_to='uploads/', verbose_name='Фото')
     date = models.DateField(verbose_name='Дата готовности', blank=True, null=True)
     farmer = models.OneToOneField(User, on_delete=models.deletion.CASCADE, null=True)
+    number = models.IntegerField(blank=True, null=True, verbose_name='Количество товара')
+    number_wholesale = models.IntegerField(blank=True, null=True, verbose_name='Мин. кол-во товара для оптовой закупки')
 
     class Meta:
         verbose_name = 'Товар'
