@@ -17,7 +17,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     ]
     role = models.CharField(max_length=3,
                                choices=ROLE_CHOICES,
-                               default='SL',
+                               default='BY',
                                verbose_name='Роль',
                                blank=False)
     is_staff = models.BooleanField('staff status', default=False)
@@ -39,7 +39,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['full_name', 'role']
+    REQUIRED_FIELDS = ['name', 'role']
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
@@ -56,7 +56,7 @@ class Item(models.Model):
     cost_wholesale = models.FloatField(blank=True, null=True, verbose_name='Оптовая цена')
     doc = models.FileField(upload_to='uploads/', verbose_name='Фото')
     date = models.DateField(verbose_name='Дата готовности', blank=True, null=True)
-    farmer = models.OneToOneField(User, on_delete=models.deletion.CASCADE)
+    farmer = models.ForeignKey("User", on_delete=models.deletion.CASCADE, verbose_name='Владелец')
     number = models.FloatField(verbose_name='Количество товара')
     number_wholesale = models.FloatField(blank=True, null=True, verbose_name='Мин. кол-во товара для оптовой закупки')
     description = models.CharField(max_length=63, verbose_name='Описание')

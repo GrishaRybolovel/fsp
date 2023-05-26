@@ -10,7 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from accounts.serializers import *
 
 
-class MyIdSet(ModelViewSet):
+class MyIdSet(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -141,7 +141,9 @@ class GetChatView(APIView):
         commonChats2 = user.chats.filter(user2=request_user.id)
 
         if commonChats1.count() == 0 and commonChats2.count() == 0:
-            new_chat = Chat.objects.create_chat(user, request_user, request_user.full_name, user.full_name)
+            new_chat = Chat.objects.create_chat(user, request_user, request_user.name, user.name)
+            user.chats.add(new_chat)
+            request_user.chats.add(new_chat)
             return MessagesView.get(MessagesView, request=request, chat_id=new_chat.id)
         elif commonChats1.count() == 1:
             return MessagesView.get(MessagesView, request=request, chat_id=commonChats1.first().id)
