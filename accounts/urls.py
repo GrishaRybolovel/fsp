@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from accounts.views import RegisterView, UserViewSet
+from accounts.views import *
 
 router = DefaultRouter()
 router.register(r"", UserViewSet)
@@ -11,7 +11,9 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', TokenObtainPairView.as_view(), name='login'),
     path('refresh/', TokenRefreshView.as_view(), name='refresh'),
-    path('get_messages/<int:id>', MessagesView.as_view(), name='get_messages'),
+    path('get_chat/<int:user_id>', GetChatView.as_view(), name='get_chat'),
+    path('chat/<int:chat_id>', MessagesView.as_view(), name='chat'),
+    path('chat/<int:chat_id>/push_message', PostMessageView.as_view(), name='post_message'),
     path('chats/', ChatsView.as_view(), name='get_chats'),
     path("", include(router.urls))
 ]

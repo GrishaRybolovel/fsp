@@ -71,14 +71,23 @@ class Item(models.Model):
 class Message(models.Model):
     sender = models.ForeignKey("User", on_delete=models.deletion.CASCADE, verbose_name='Отправитель', null=True)
     text = models.CharField(max_length=2048, blank=False, null=True)
-    created_at = models.DateTimeField(auto_now=True, null=True, verbose_name='Дата отправки')
+    created_at = models.DateTimeField(auto_now=True, null=False, verbose_name='Дата отправки')
 
     class Meta:
         verbose_name = 'Сообщения'
         verbose_name_plural = 'Сообщения'
 
+class ChatManager(models.Manager):
+    def create_chat(self, user1, user2, name1, name2):
+        chat = self.create(user1=user1, user2=user2, name1=name1, name2=name2)
+        return chat
+
 class Chat(models.Model):
-    name = models.CharField(max_length=255, null=True, verbose_name='Название чата')
+    objects = ChatManager()
+    user1 = models.ForeignKey(User, on_delete=models.deletion.CASCADE, verbose_name='Отправитель1', null=True, related_name='user1')
+    user2 = models.ForeignKey(User, on_delete=models.deletion.CASCADE, verbose_name='Отправитель2', null=True, related_name='user2')
+    name1 = models.CharField(max_length=255, null=True, verbose_name='Название чата1')
+    name2 = models.CharField(max_length=255, null=True, verbose_name='Название чата2')
     messages = models.ManyToManyField(
         "Message",
         related_name="messages",
@@ -89,3 +98,4 @@ class Chat(models.Model):
     class Meta:
         verbose_name = 'Чат'
         verbose_name_plural = 'Чаты'
+

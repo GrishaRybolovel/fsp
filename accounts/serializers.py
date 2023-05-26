@@ -11,12 +11,12 @@ class UserSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ['text', 'created_at', 'sender', 'id']
+        fields = ['text', 'created_at', 'sender', 'id',]
 
 class ChatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chat
-        fields = ['name', 'id']
+        fields = ['user1', 'user2', 'name1', 'name2', 'id']
 
 
 class RegisterSerializer(serializers.HyperlinkedModelSerializer):
