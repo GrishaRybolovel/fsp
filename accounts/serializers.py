@@ -34,4 +34,17 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
 
         return user
 
+class ItemSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Item
+        fields = ['id', 'name', 'cost_retail', 'cost_wholesale',
+                  'date', 'farmer', 'number', 'number_wholesale']
+
+    def create(self, validated_data):
+        item = Item.objects.create(
+            **validated_data
+        )
+
+        return item
+
 

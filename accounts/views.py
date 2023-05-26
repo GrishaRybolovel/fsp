@@ -65,3 +65,35 @@ class MessagesView(APIView):
             data={
                 'messages': res.data,
             }, status=201)
+
+
+class ItemsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        items = Item.objects.all()
+        serializer_context = {
+            'request': request,
+        }
+        res = ItemSerializer(items,
+                             context=serializer_context,
+                             many=True)
+        return Response(
+            data = {
+                'items' : res.data,
+            },
+            status=201
+        )
+
+    def post(self, request):
+        serializer = ItemSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        item = serializer.save()
+
+        return Response(
+            data={
+                'Status': 'OK',
+                'Name' : item.name
+            },
+            status=201
+        )
