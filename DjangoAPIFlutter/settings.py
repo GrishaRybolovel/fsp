@@ -95,10 +95,10 @@ WSGI_APPLICATION = 'DjangoAPIFlutter.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fsp_qk25',
-        'USER': 'fsp_qk25_user',
-        'PASSWORD': 'TaFvMfFBDDuUK1AFczCbZ7rJLrZiyUlF',
-        'HOST': 'dpg-chokcgik728ivvtkvfu0-a',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': 'localhost',
         'PORT': '5432'
     }
 }
@@ -165,7 +165,7 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = os.path.join(BASE_DIR, '/media/')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
