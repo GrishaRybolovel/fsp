@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'search',
     'rest_framework',
     'accounts',
     'rest_framework_simplejwt',
@@ -95,10 +96,10 @@ WSGI_APPLICATION = 'DjangoAPIFlutter.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fsp_qk25',
-        'USER': 'fsp_qk25_user',
-        'PASSWORD': 'TaFvMfFBDDuUK1AFczCbZ7rJLrZiyUlF',
-        'HOST': 'dpg-chokcgik728ivvtkvfu0-a',
+        'NAME': 'fsp_mnev',
+        'USER': 'fsp_mnev_user',
+        'PASSWORD': 'ac4fe1mvzBc8IRpnpagJVSqmeczIfMIr',
+        'HOST': 'dpg-chosv9e7avjb90j6iv60-a',
         'PORT': '5432'
     }
 }
@@ -157,17 +158,4 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True
 }
 
-STATIC_URL = os.path.join(BASE_DIR, '/static/')
-#STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-MEDIA_URL = os.path.join(BASE_DIR, '/media/')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATIC_URL = '/static/'
