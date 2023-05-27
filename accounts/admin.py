@@ -30,3 +30,10 @@ class ChatAdmin(admin.ModelAdmin):
     search_fields = ('id',)
 
 admin.site.register(Chat, ChatAdmin)
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'date', 'rate', 'text')
+    list_display_links = ('id',)
+    search_fields = ('id',)
+
+admin.site.register(Comment, CommentAdmin)
