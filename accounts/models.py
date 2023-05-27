@@ -8,6 +8,24 @@ from DjangoAPIFlutter.managers import UserManager
 from django.db.models import QuerySet
 
 
+
+class CommentManager(models.Manager):
+    def create_comment(self, name, text, rate):
+        chat = self.create(name=name, text=text, rate=rate)
+        return chat
+
+
+class Comment(models.Model):
+    objects = CommentManager()
+    date = models.DateTimeField(null=True, auto_now=True, verbose_name='Время отправки')
+    name = models.CharField(null=True, max_length=100, verbose_name='Отправитель')
+    rate = models.IntegerField(null=False, verbose_name='Оценка')
+    text = models.CharField(null=True, max_length=2048, verbose_name='Текст')
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+
 class Item(models.Model):
     name = models.CharField(max_length=63, verbose_name='Название')
     cost_retail = models.FloatField(verbose_name='Розничная цена')
@@ -56,6 +74,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     address = models.CharField(max_length=300, null=True, blank=True)
     phone_number = models.CharField(max_length=20, null = True, blank=True)
     card = models.CharField(max_length=20, null=True, blank=True)
+    numbers_of_comments = models.IntegerField(default=0)
+    rate = models.FloatField(default=0.0)
+    comments = models.ManyToManyField(
+        "Comment",
+        related_name='comments',
+        blank=True,
+        verbose_name='Комментарии'
+    )
     chats = models.ManyToManyField(
         "Chat",
         related_name='chats',

@@ -18,7 +18,7 @@ class UserInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'name', 'role', 'address', 'phone_number', 'card']
+        fields = ['email', 'name', 'role', 'address', 'phone_number', 'card', 'rate']
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -59,6 +59,11 @@ class ItemSerializer1(serializers.ModelSerializer):
                   'date', 'farmer', 'number', 'number_wholesale',
                   'description', 'expire_date', 'number_for_month',
                   'subscriptable', 'category', 'doc']
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ['id', 'name', 'rate', 'text', 'date']
 
 
     def create(self, validated_data):
