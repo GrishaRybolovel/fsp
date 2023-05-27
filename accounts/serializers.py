@@ -96,3 +96,32 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['role'] = self.user.role
         data['id'] = self.user.id
         return data
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = [
+            'status', 'items', 'date', 'payment', 'shipping_address',
+            'way_of_shipping', 'date_of_receive'
+        ]
+
+    def create(self, validated_data):
+        item = Item.objects.create(
+            **validated_data
+        )
+
+        return item
+
+class OrderItemsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItems
+        fields = [
+            'amount', 'item', 'farmer', 'user'
+        ]
+
+    def create(self, validated_data):
+        item = Item.objects.create(
+            **validated_data
+        )
+
+        return item

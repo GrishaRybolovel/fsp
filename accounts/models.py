@@ -7,7 +7,6 @@ from django.db import models
 from DjangoAPIFlutter.managers import UserManager
 from django.db.models import QuerySet
 
-
 class Item(models.Model):
     name = models.CharField(max_length=63, verbose_name='Название')
     cost_retail = models.FloatField(verbose_name='Розничная цена')
@@ -35,6 +34,96 @@ class Item(models.Model):
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+
+
+class OrderItemsManager(models.Manager):
+    def create_order_item(self, amount, item, farmer, user):
+        order = self.create(amount=amount, item=item, farmer=farmer, user=user)
+        return order
+
+
+class ChatManager(models.Manager):
+    def create_chat(self, user1, user2, name1, name2):
+        chat = self.create(user1=user1, user2=user2, name1=name1, name2=name2)
+        return chat
+
+
+
+
+class Message(models.Model):
+    sender = models.ForeignKey("User", on_delete=models.deletion.CASCADE, verbose_name='Отправитель', null=True)
+    text = models.CharField(max_length=2048, blank=False, null=True)
+    created_at = models.DateTimeField(auto_now=True, null=False, verbose_name='Дата отправки')
+
+    class Meta:
+        verbose_name = 'Сообщения'
+        verbose_name_plural = 'Сообщения'
+
+
+class Chat(models.Model):
+    objects = ChatManager()
+    user1 = models.ForeignKey("User", on_delete=models.deletion.CASCADE, verbose_name='Отправитель1', null=True, related_name='user1')
+    user2 = models.ForeignKey("User", on_delete=models.deletion.CASCADE, verbose_name='Отправитель2', null=True, related_name='user2')
+    name1 = models.CharField(max_length=255, null=True, verbose_name='Название чата1')
+    name2 = models.CharField(max_length=255, null=True, verbose_name='Название чата2')
+    messages = models.ManyToManyField(
+        "Message",
+        related_name="messages",
+        blank=True,
+        verbose_name='Сообщения'
+    )
+
+    class Meta:
+        verbose_name = 'Чат'
+        verbose_name_plural = 'Чаты'
+
+class Order(models.Model):
+    status = models.BooleanField(verbose_name='Статус покупки', default=False)
+    items = models.ManyToManyField(
+        "OrderItems",
+        related_name='items_name_123',
+        blank=True,
+        verbose_name='Товары'
+    )
+    date = models.DateField(verbose_name='Дата покупки', auto_now=True)
+    PAYMENT_CHOICES = [
+        ('CA', 'Карта'),
+        ('BC', 'Юр. лицо'),
+        ('CS', 'Наличные')
+    ]
+    SHIPPING_CHOICES = [
+        ('CA', 'Самолет'),
+        ('BC', 'Поезд'),
+    ]
+
+    payment = models.CharField(max_length=3,
+                               choices=PAYMENT_CHOICES,
+                               default='BY',
+                               verbose_name='Роль',
+                               blank=True,
+                               null=True)
+    shipping_address = models.CharField(verbose_name='Адрес доставки', null=True, blank=True)
+    way_of_shipping = models.CharField(max_length=3,
+                               choices=PAYMENT_CHOICES,
+                               default='BY',
+                               verbose_name='Роль',
+                               blank=True,
+                               null=True)
+    date_of_receive = models.DateField(verbose_name='Дата получения заказа', blank=True, null=True)
+    total_price = models.FloatField(verbose_name='Общая стоимость', default=0)
+    owner = models.ForeignKey('User', on_delete=models.deletion.CASCADE)
+
+class OrderItemsManager(models.Manager):
+    def create_order_item(self, amount, item, farmer, user):
+        order = self.create(amount=amount, item=item, farmer=farmer, user=user)
+        return order
+
+class OrderItems(models.Model):
+    objects = OrderItemsManager()
+    amount = models.IntegerField('Количество товара', default=0)
+    item = models.ForeignKey('Item', on_delete=models.deletion.CASCADE, verbose_name='Покупка')
+    farmer = models.ForeignKey('User', on_delete=models.deletion.CASCADE, verbose_name='Фермер')
+    user = models.ForeignKey('User', on_delete=models.deletion.CASCADE, verbose_name='Покупатель')
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.CharField(max_length=20, unique=True)
@@ -66,7 +155,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def get_items(self) -> QuerySet[Item]:
         return Item.objects.filter(farmer__email=self.email)
-
+    def get_orders(self):
+        return Order.objects.filter(owner__id=self.id)
 
     objects = UserManager()
 
@@ -82,40 +172,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-
-class Message(models.Model):
-    sender = models.ForeignKey("User", on_delete=models.deletion.CASCADE, verbose_name='Отправитель', null=True)
-    text = models.CharField(max_length=2048, blank=False, null=True)
-    created_at = models.DateTimeField(auto_now=True, null=False, verbose_name='Дата отправки')
-
-    class Meta:
-        verbose_name = 'Сообщения'
-        verbose_name_plural = 'Сообщения'
-
-class ChatManager(models.Manager):
-    def create_chat(self, user1, user2, name1, name2):
-        chat = self.create(user1=user1, user2=user2, name1=name1, name2=name2)
-        return chat
-
-class Chat(models.Model):
-    objects = ChatManager()
-    user1 = models.ForeignKey(User, on_delete=models.deletion.CASCADE, verbose_name='Отправитель1', null=True, related_name='user1')
-    user2 = models.ForeignKey(User, on_delete=models.deletion.CASCADE, verbose_name='Отправитель2', null=True, related_name='user2')
-    name1 = models.CharField(max_length=255, null=True, verbose_name='Название чата1')
-    name2 = models.CharField(max_length=255, null=True, verbose_name='Название чата2')
-    messages = models.ManyToManyField(
-        "Message",
-        related_name="messages",
-        blank=True,
-        verbose_name='Сообщения'
-    )
-
-    class Meta:
-        verbose_name = 'Чат'
-        verbose_name_plural = 'Чаты'
-
-class Order(models.Model):
-    status = models.BooleanField('Статус покупки', default=False)
-    date = models.DateField()
-
-
