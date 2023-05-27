@@ -65,7 +65,10 @@ class PostMessageView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, chat_id):
-        request.data._mutable = True
+        try:
+            request.data._mutable = True
+        except:
+            pass
         request.data.update({'sender': request.user.id})
         chat = Chat.objects.get(id=chat_id)
         serializer = MessageSerializer(data=request.data)
@@ -125,7 +128,10 @@ class ItemsView(APIView):
         )
 
     def post(self, request):
-        request.data._mutable = True
+        try:
+            request.data._mutable = True
+        except:
+            pass
         tokens = request.data['doc'].split(' ')
         encoded = tokens[0]
         file = ContentFile(base64.b64decode(encoded), name=tokens[1])
@@ -161,7 +167,11 @@ class ItemsView2(APIView):
         )
 
     def post(self, request):
-        request.data._mutable = True
+        try:
+            request.data._mutable = True
+        except:
+            pass
+
         tokens = request.data['doc'].split(' ')
         encoded = tokens[0]
         file = ContentFile(base64.b64decode(encoded), name=tokens[1])
@@ -236,12 +246,15 @@ class InfoView(APIView):
     def get(self, request, user_id):
         serializer = UserInfoSerializer(User.objects.get(id=user_id))
         return Response(
-            data={'info': serializer.data},
+            data={"info": serializer.data},
             status=201
         )
 
     def put(self, request, user_id):
-        request.data._mutable = True
+        try:
+            request.data._mutable = True
+        except:
+            pass
         if user_id != request.user.id:
             return Response(
                 status=400
