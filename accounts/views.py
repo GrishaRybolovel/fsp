@@ -1,6 +1,10 @@
 from rest_framework.views import APIView, Response
 from rest_framework.viewsets import ModelViewSet
 from django.core import serializers
+import imghdr
+from mimetypes import guess_extension, guess_type
+import base64
+from django.core.files.base import ContentFile
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import action
 
@@ -108,7 +112,7 @@ class ItemsView(APIView):
         serializer_context = {
             'request': request,
         }
-        res = ItemSerializer(items,
+        res = ItemSerializer2(items,
                              context=serializer_context,
                              many=True)
         return Response(
@@ -119,7 +123,12 @@ class ItemsView(APIView):
         )
 
     def post(self, request):
-        serializer = ItemSerializer(data=request.data)
+        request.data._mutable = True
+        tokens = request.data['doc'].split(' ')
+        encoded = tokens[0]
+        file = ContentFile(base64.b64decode(encoded), name=tokens[1])
+        request.data['doc'] = file
+        serializer = ItemSerializer1(data=request.data)
         serializer.is_valid(raise_exception=True)
         item = serializer.save()
 

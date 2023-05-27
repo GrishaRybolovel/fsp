@@ -1,4 +1,7 @@
+import os
+
 from .models import *
+import base64
 from rest_framework import serializers
 
 
@@ -34,7 +37,7 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
 
         return user
 
-class ItemSerializer(serializers.ModelSerializer):
+class ItemSerializer1(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ['id', 'name', 'cost_retail', 'cost_wholesale',
@@ -42,6 +45,28 @@ class ItemSerializer(serializers.ModelSerializer):
                   'description', 'expire_date', 'number_for_month',
                   'subscriptable', 'category', 'doc']
 
+
+    def create(self, validated_data):
+        item = Item.objects.create(
+            **validated_data
+        )
+
+        return item
+
+class ItemSerializer2(serializers.ModelSerializer):
+    doc = serializers.SerializerMethodField(method_name='get_foo')
+    class Meta:
+        model = Item
+        fields = ['id', 'name', 'cost_retail', 'cost_wholesale',
+                  'date', 'farmer', 'number', 'number_wholesale',
+                  'description', 'expire_date', 'number_for_month',
+                  'subscriptable', 'category', 'doc']
+
+    def get_foo(self, instance):
+        instance.doc.open('rb')
+        res = instance.doc.read()
+        instance.doc.close()
+        return f'{base64.b64encode(res)} {os.path.basename(instance.doc.name)}'
     def create(self, validated_data):
         item = Item.objects.create(
             **validated_data
