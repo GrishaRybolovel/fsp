@@ -140,6 +140,7 @@ class ItemsView(APIView):
             status=201
         )
 
+
 class GetChatView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -158,4 +159,23 @@ class GetChatView(APIView):
             return MessagesView.get(MessagesView, request=request, chat_id=commonChats1.first().id)
         else:
             return MessagesView.get(MessagesView, request=request, chat_id=commonChats2.first().id)
+
+class InfoView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserInfoSerializer(request.user)
+        return Response(
+            data={'info': serializer.data},
+            status=201
+        )
+
+    def put(self, request):
+        request.data._mutable = True
+        request.data['email'] = request.user.email
+        request.data['name'] = request.user.name
+        serializer = UserInfoSerializer(data=request.data, instance=request.user)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(status=201)
 

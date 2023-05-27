@@ -4,6 +4,18 @@ from .models import *
 import base64
 from rest_framework import serializers
 
+class UserInfoSerializer(serializers.ModelSerializer):
+
+    def update(self, instance, validated_data):
+        instance.address = validated_data.get('address', instance.address)
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
+        instance.card = validated_data.get('card', instance.card)
+        instance.save()
+        return instance
+
+    class Meta:
+        model = User
+        fields = ['email', 'name', 'role', 'address', 'phone_number', 'card']
 
 class UserSerializer(serializers.ModelSerializer):
 

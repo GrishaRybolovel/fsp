@@ -11,6 +11,7 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', TokenObtainPairView.as_view(), name='login'),
     path('refresh/', TokenRefreshView.as_view(), name='refresh'),
+    path('info/', InfoView.as_view(), name = 'info'),
     path('getId/', MyIdSet.as_view(), name='myid'),
     path('get_chat/<int:user_id>', GetChatView.as_view(), name='get_chat'),
     path('chat/<int:chat_id>', MessagesView.as_view(), name='chat'),
