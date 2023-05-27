@@ -1,8 +1,11 @@
 import os
 
+from django.contrib.auth import authenticate
+
 from .models import *
 import base64
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserInfoSerializer(serializers.ModelSerializer):
 
@@ -86,4 +89,10 @@ class ItemSerializer2(serializers.ModelSerializer):
 
         return item
 
-
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data['name'] = self.user.name
+        data['role'] = self.user.role
+        data['id'] = self.user.id
+        return data

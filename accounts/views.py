@@ -7,6 +7,8 @@ import base64
 from django.core.files.base import ContentFile
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import action
+from rest_framework_simplejwt.views import TokenViewBase
+
 
 from .models import *
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -160,6 +162,9 @@ class GetChatView(APIView):
         else:
             return MessagesView.get(MessagesView, request=request, chat_id=commonChats2.first().id)
 
+
+class MyTokenObtainPairView(TokenViewBase):
+    serializer_class = MyTokenObtainPairSerializer
 class InfoView(APIView):
     permission_classes = [IsAuthenticated]
 
