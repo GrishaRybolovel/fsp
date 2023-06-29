@@ -152,7 +152,7 @@ class ItemsView2(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        items = request.user.get_items()
+        items = request.user.get_items
         serializer_context = {
             'request': request,
         }
@@ -212,6 +212,7 @@ class GetChatView(APIView):
 class MyTokenObtainPairView(TokenViewBase):
     serializer_class = MyTokenObtainPairSerializer
 
+
 class CommentView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -267,6 +268,7 @@ class InfoView(APIView):
         serializer.save()
         return Response(status=201)
 
+
 class OrderView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -279,13 +281,13 @@ class OrderView(APIView):
         )
 
 
-
 class AddToOrder(APIView):
     permission_classes = [IsAuthenticated]
+
     def post(self, request, item_id, amount):
         item = Item.objects.get(id=item_id)
-        order = OrderItems.create_order_item(amount, item, item.farmer, request.user.id)
-        uorder = request.user.get_orders().last()
+        order = OrderItems.objects.create_order_item(amount, item, item.farmer, request.user.id)
+        uorder = request.user.get_last_order()
         uorder.items.add(order)
         uorder.total_price += item.cost_retail * amount
         uorder.save()

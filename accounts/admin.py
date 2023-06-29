@@ -37,3 +37,17 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('id',)
 
 admin.site.register(Comment, CommentAdmin)
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id',)
+    list_display_links = ('id',)
+    search_fields = ('id',)
+
+admin.site.register(Order, OrderAdmin)
+
+class OrderItemsAdmin(admin.ModelAdmin):
+    list_display = ('id',)
+    list_display_links = ('id',)
+    search_fields = ('id',)
+
+admin.site.register(OrderItems, OrderItemsAdmin)
