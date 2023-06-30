@@ -187,7 +187,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_last_order(self):
         orders = Order.objects.filter(owner__id=self.id)
         if orders.count() == 0 or orders.last().status:
-            Order.objects.create_order(owner=self)
+            new_order = Order.objects.create_order(owner=self)
+            return new_order
+        return orders.last()
 
 
     objects = UserManager()
