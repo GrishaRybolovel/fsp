@@ -162,6 +162,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     address = models.CharField(max_length=300, null=True, blank=True)
     phone_number = models.CharField(max_length=20, null = True, blank=True)
     card = models.CharField(max_length=20, null=True, blank=True)
+    balance = models.FloatField(default=0.0)
     numbers_of_comments = models.IntegerField(default=0)
     rate = models.FloatField(default=0.0)
     comments = models.ManyToManyField(

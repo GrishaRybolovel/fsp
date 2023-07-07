@@ -23,5 +23,6 @@ urlpatterns = [
     path('to_order/<item_id>/<amount>', AddToOrder.as_view(), name='add_to_order'),
     path('orders/', OrdersView.as_view(), name='orders'),
     path('last_order/', LastOrderView.as_view(), name='last_order'),
+    path('change_balance/', ChangeBalance.as_view(), name='change_balance'),
     path("", include(router.urls)),
 ]

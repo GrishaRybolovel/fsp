@@ -192,7 +192,7 @@ class ItemsView2(APIView):
 class GetChatView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, user_id):
+    def get(self, request, user_id):    
         user = User.objects.get(id=user_id)
         request_user = request.user
         commonChats1 = user.chats.filter(user1=request_user.id)
@@ -321,4 +321,15 @@ class AddToOrder(APIView):
         uorder.items.add(order)
         uorder.total_price += item.cost_retail * float(amount)
         uorder.save()
+        return Response(status=201)
+
+
+class ChangeBalance(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        total = request.data['total']
+        user = request.user
+        user.balance += float(total)
+        user.save()
         return Response(status=201)
