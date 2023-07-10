@@ -333,3 +333,70 @@ class ChangeBalance(APIView):
         user.balance += float(total)
         user.save()
         return Response(status=201)
+
+
+def check_item(itemId, amount):
+    try:
+        item = Item.objects.get(id=itemId)
+        if item.number < amount:
+            return False
+        return True
+    except:
+        return False
+
+
+class PayForOrder(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        order = request.user.get_last_order()
+        for order_item in order.items.all():
+            if not check_item(order_item.item.id, order_item.amount):
+                return Response(status=404, data={'not enough product': order_item.id})
+        if order.total_price > request.user.balance:
+            return Response(status=404, data={'not enough money': 0})
+
+        request.user.balance -= order.total_price
+        request.user.save()
+        for order_item in order.items.all():
+            item = Item.objects.get(id=order_item.item.id)
+            item.number -= order_item.amount
+            item.save()
+        order.status = True
+        order.save()
+        return Response(status=201)
+
+
+class ChangeFarmerInventory(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        item = Item.objects.get(id=request.data['id'])
+        if item.farmer.id != request.user.id:
+            return Response(status=404)
+        change = float(request.data['change'])
+        item.number -= change
+        item.save()
+
+        if item.number <= 0:
+            item.delete()
+
+        return Response(status=201)
+
+
+class ChangeOrder(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        item = OrderItems.objects.get(id=request.data['id'])
+        if item.user.id != request.user.id:
+            return Response(status=404)
+        change = float(request.data['change'])
+        item.amount -= change
+        item.save()
+
+        if item.amount <= 0:
+            item.delete()
+
+        return Response(status=201)
+

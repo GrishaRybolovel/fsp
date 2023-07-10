@@ -24,5 +24,8 @@ urlpatterns = [
     path('orders/', OrdersView.as_view(), name='orders'),
     path('last_order/', LastOrderView.as_view(), name='last_order'),
     path('change_balance/', ChangeBalance.as_view(), name='change_balance'),
+    path('pay_for_order/', PayForOrder.as_view(), name='pay_for_order'),
+    path('change_inventory/', ChangeFarmerInventory.as_view(), name='change_inventory'),
+    path('change_order/', ChangeOrder.as_view(), name='change_inventory'),
     path("", include(router.urls)),
 ]

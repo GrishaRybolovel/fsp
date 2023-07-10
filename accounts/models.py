@@ -142,6 +142,7 @@ class OrderItems(models.Model):
         verbose_name = 'Предмет'
         verbose_name_plural = 'Предметы'
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=150)
