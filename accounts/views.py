@@ -400,3 +400,29 @@ class ChangeOrder(APIView):
 
         return Response(status=201)
 
+
+class ClearOrder(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        order = request.user.get_last_order()
+        for item in order.items.all():
+            item.delete()
+        return Response(status=201)
+
+
+class DeleteItem(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            item = Item.objects.get(id=request.data['id'])
+        except:
+            return Response(status=404)
+
+        if item.farmer.id != request.user.id:
+            return Response(status=404)
+
+        item.delete()
+        return Response(status=201)
+

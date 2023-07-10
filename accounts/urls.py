@@ -27,5 +27,7 @@ urlpatterns = [
     path('pay_for_order/', PayForOrder.as_view(), name='pay_for_order'),
     path('change_inventory/', ChangeFarmerInventory.as_view(), name='change_inventory'),
     path('change_order/', ChangeOrder.as_view(), name='change_inventory'),
+    path('clear_order/', ClearOrder.as_view(), name='clear_order'),
+    path('delete_item/', DeleteItem.as_view(), name='delete_item'),
     path("", include(router.urls)),
 ]
