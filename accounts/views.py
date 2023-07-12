@@ -246,8 +246,11 @@ class InfoView(APIView):
 
     def get(self, request, user_id):
         serializer = UserInfoSerializer(User.objects.get(id=user_id))
+        data = serializer.data
+        if request.user.id != user_id:
+            data.pop('balance')
         return Response(
-            data={"info": serializer.data},
+            data={"info": data},
             status=201
         )
 
@@ -263,6 +266,7 @@ class InfoView(APIView):
         user = User.objects.get(id=user_id)
         request.data['email'] = user.email
         request.data['name'] = user.name
+        request.data['balance'] = user.balance
         serializer = UserInfoSerializer(data=request.data, instance=user)
         serializer.is_valid(raise_exception=True)
         serializer.save()
