@@ -391,6 +391,7 @@ class ClearOrder(APIView):
         for item in order.items.all():
             item.delete()
         order.total_price = 0.0
+        order.save()
         return Response(status=201)
 
 
