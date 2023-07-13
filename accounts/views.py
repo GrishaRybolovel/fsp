@@ -133,6 +133,7 @@ class ItemsView(APIView):
         except:
             pass
         tokens = request.data['doc'].split(' ')
+        request.data['farmer'] = request.user.id
         encoded = tokens[0]
         file = ContentFile(base64.b64decode(encoded), name=tokens[1])
         request.data['doc'] = file

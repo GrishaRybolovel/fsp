@@ -107,7 +107,7 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = [
             'status', 'items', 'date', 'payment', 'shipping_address',
-            'way_of_shipping', 'date_of_receive'
+            'way_of_shipping', 'date_of_receive', 'total_price',
         ]
 
     def create(self, validated_data):
