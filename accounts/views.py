@@ -140,7 +140,7 @@ class ItemsView(APIView):
         serializer = ItemSerializer1(data=request.data)
         serializer.is_valid(raise_exception=True)
         item = serializer.save()
-
+        print(item.number_wholesale)
         return Response(
             data={
                 'Status': 'OK',
@@ -294,6 +294,12 @@ class OrdersView(APIView):
         )
 
 
+def get_cost(item, amount):
+    if item.number_wholesale is not None and item.cost_wholesale is not None and amount >= item.number_wholesale:
+        return item.cost_wholesale * float(amount)
+    else:
+        return item.cost_retail * float(amount)
+
 class AddToOrder(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -302,7 +308,7 @@ class AddToOrder(APIView):
         order = OrderItems.objects.create_order_item(amount, item, item.farmer, request.user)
         uorder = request.user.get_last_order()
         uorder.items.add(order)
-        uorder.total_price += item.cost_retail * float(amount)
+        uorder.total_price += get_cost(item, amount)
         uorder.save()
         return Response(status=201)
 
@@ -376,10 +382,12 @@ class ChangeOrder(APIView):
         if item.user.id != request.user.id:
             return Response(status=404)
         change = float(request.data['change'])
+
+        order.total_price -= get_cost(item.item, item.amount)
         item.amount -= change
-        order.total_price -= change * item.item.cost_retail
-        order.save()
         item.save()
+        order.total_price += get_cost(item.item, item.amount)
+        order.save()
 
         if item.amount <= 0:
             item.delete()
