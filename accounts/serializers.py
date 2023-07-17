@@ -73,6 +73,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
         return item
 
+
 class ItemSerializer2(serializers.ModelSerializer):
     class Meta:
         model = Item
@@ -84,8 +85,12 @@ class ItemSerializer2(serializers.ModelSerializer):
         item = Item.objects.create(
             **validated_data
         )
-
         return item
+
+    def update(self, instance, validated_data):
+        instance.shipping_address = validated_data['shipping_address']
+        return instance
+
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
