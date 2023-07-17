@@ -95,10 +95,10 @@ WSGI_APPLICATION = 'DjangoAPIFlutter.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'innofarm_meae',
-        'USER': 'innofarm_meae_user',
-        'PASSWORD': 'uJYei41Vqx5uiz8o2tF5ThL8xrt40Tyu',
-        'HOST': 'dpg-ciqqavunqql4qa34l8eg-a',
+        'NAME': 'innofarm_916r',
+        'USER': 'innofarm_916r_user',
+        'PASSWORD': 'wxiNI32QQoMPj7gc1U2aVwnvCisfgnlV',
+        'HOST': 'dpg-ciqqqm6nqql4qa4loi50-a',
         'PORT': '5432'
     }
 }
