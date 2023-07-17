@@ -74,19 +74,12 @@ class CommentSerializer(serializers.ModelSerializer):
         return item
 
 class ItemSerializer2(serializers.ModelSerializer):
-    doc = serializers.SerializerMethodField(method_name='get_foo')
     class Meta:
         model = Item
         fields = ['id', 'name', 'cost_retail', 'cost_wholesale',
                   'date', 'farmer', 'number', 'number_wholesale',
                   'description', 'expire_date', 'number_for_month',
                   'subscriptable', 'category', 'doc']
-
-    def get_foo(self, instance):
-        instance.doc.open('rb')
-        res = instance.doc.read()
-        instance.doc.close()
-        return f'{base64.b64encode(res)} {os.path.basename(instance.doc.name)}'
     def create(self, validated_data):
         item = Item.objects.create(
             **validated_data

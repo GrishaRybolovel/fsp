@@ -30,7 +30,7 @@ class Item(models.Model):
     name = models.CharField(max_length=63, verbose_name='Название')
     cost_retail = models.FloatField(verbose_name='Розничная цена')
     cost_wholesale = models.FloatField(blank=True, null=True, verbose_name='Оптовая цена')
-    doc = models.FileField(upload_to='uploads/', verbose_name='Фото')
+    doc = models.CharField(blank=True, null=True, verbose_name='Фото', max_length=1000000)
     date = models.DateField(verbose_name='Дата готовности', blank=True, null=True)
     farmer = models.ForeignKey("User", on_delete=models.deletion.CASCADE, verbose_name='Владелец')
     number = models.FloatField(verbose_name='Количество товара')

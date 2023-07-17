@@ -137,7 +137,7 @@ class ItemsView(APIView):
         encoded = tokens[0]
         file = ContentFile(base64.b64decode(encoded), name=tokens[1])
         request.data['doc'] = file
-        serializer = ItemSerializer1(data=request.data)
+        serializer = ItemSerializer2(data=request.data)
         serializer.is_valid(raise_exception=True)
         item = serializer.save()
         print(item.number_wholesale)
@@ -271,6 +271,13 @@ class LastOrderView(APIView):
             data={'order': b},
             status=201
         )
+
+    def put(self, request):
+        order = request.user.get_last_order()
+        serializer = OrderSerializer(data=request.data, instance=order)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(status=201)
 
 
 class OrdersView(APIView):
