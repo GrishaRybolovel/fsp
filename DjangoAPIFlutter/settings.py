@@ -26,7 +26,7 @@ SECRET_KEY = 'YOUR_SECRET_KEY'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.212.1', '127.0.0.1', 'fspmainservice.onrender.com']
+ALLOWED_HOSTS = ['192.168.212.1', '127.0.0.1', 'innofarm-main.onrender.com']
 
 
 # Application definition
@@ -95,10 +95,10 @@ WSGI_APPLICATION = 'DjangoAPIFlutter.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres4',
-        'USER': 'postgres',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
+        'NAME': 'innofarm_ssu6',
+        'USER': 'innofarm_ssu6_user',
+        'PASSWORD': 'TJuv7EbSlG43IzdTd7YJ5NvSbmLLu9kq',
+        'HOST': 'dpg-ciohehlph6elhbt0o8u0-a',
         'PORT': '5432'
     }
 }
