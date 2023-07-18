@@ -145,11 +145,32 @@ class ItemsView(APIView):
             status=201
         )
 
+
 class ItemsView2(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         items = request.user.get_items
+        serializer_context = {
+            'request': request,
+        }
+        res = ItemSerializer2(items,
+                             context=serializer_context,
+                             many=True)
+        return Response(
+            data = {
+                'items' : res.data,
+            },
+            status=201
+        )
+
+
+class ItemsView3(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, user_id):
+        user = User.objects.get(user_id)
+        items = user.get_items
         serializer_context = {
             'request': request,
         }

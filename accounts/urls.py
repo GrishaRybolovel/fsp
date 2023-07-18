@@ -20,6 +20,7 @@ urlpatterns = [
     path('chats/', ChatsView.as_view(), name='get_chats'),
     path('items/', ItemsView.as_view(), name='get_items'),
     path('farmer/', ItemsView2.as_view(), name='get_items_farmer'),
+    path('farmer/<int:user_id>', ItemsView3.as_view(), name='get_items_farmer2'),
     path('to_order/<item_id>/<amount>', AddToOrder.as_view(), name='add_to_order'),
     path('orders/', OrdersView.as_view(), name='orders'),
     path('last_order/', LastOrderView.as_view(), name='last_order'),
