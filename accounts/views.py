@@ -169,7 +169,7 @@ class ItemsView3(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, user_id):
-        user = User.objects.get(user_id)
+        user = User.objects.get(id=user_id)
         items = user.get_items
         serializer_context = {
             'request': request,
@@ -189,7 +189,7 @@ class GetItemView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, item_id):
-        item = Item.objects.get(id = item_id)
+        item = Item.objects.get(id=item_id)
         serializer_context = {
             'request': request,
         }
