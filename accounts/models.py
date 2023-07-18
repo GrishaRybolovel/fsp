@@ -35,7 +35,7 @@ class Item(models.Model):
     farmer = models.ForeignKey("User", on_delete=models.deletion.CASCADE, verbose_name='Владелец')
     number = models.FloatField(verbose_name='Количество товара')
     number_wholesale = models.FloatField(blank=True, null=True, verbose_name='Мин. кол-во товара для оптовой закупки')
-    description = models.CharField(max_length=63, verbose_name='Описание')
+    description = models.CharField(max_length=10000, verbose_name='Описание')
     expire_date = models.DateField(verbose_name='Дата окончания срока годности', blank=True, null=True)
     number_for_month = models.FloatField(blank=True, null=True, verbose_name='Количество товара на месяц(подписка)')
     subscriptable = models.BooleanField(verbose_name="Возможность подписки")
