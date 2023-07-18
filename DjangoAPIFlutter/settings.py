@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.212.1', '127.0.0.1', 'innofarm-main.onrender.com']
 
-
+CORS_ORIGIN_ALLOW_ALL = True
 # Application definition
 
 INSTALLED_APPS = [
