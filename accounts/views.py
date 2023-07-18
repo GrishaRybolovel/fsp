@@ -185,6 +185,22 @@ class ItemsView3(APIView):
         )
 
 
+class GetItemView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, item_id):
+        item = Item.objects.get(id = item_id)
+        serializer_context = {
+            'request': request,
+        }
+        res = ItemSerializer2(item,
+                              context=serializer_context)
+        return Response(
+            data={'item':res.data},
+            status=201
+        )
+
+
 class GetChatView(APIView):
     permission_classes = [IsAuthenticated]
 

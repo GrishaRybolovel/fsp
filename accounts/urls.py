@@ -30,5 +30,6 @@ urlpatterns = [
     path('change_order/', ChangeOrder.as_view(), name='change_inventory'),
     path('clear_order/', ClearOrder.as_view(), name='clear_order'),
     path('delete_item/', DeleteItem.as_view(), name='delete_item'),
+    path('item/<int:item_id>', GetItemView.as_view(), name='get_item'),
     path("", include(router.urls)),
 ]
